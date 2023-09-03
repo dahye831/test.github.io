@@ -10,6 +10,7 @@ let move = 0;
 slideBar.setAttribute("style", "transform: translateX(0)");
 
 const slideFun = (e) => {
+  
   const target = e.target;
   const targetName = target.className;
   const slideLength = slideItems.length;
@@ -18,23 +19,16 @@ const slideFun = (e) => {
   const listMoveMin = 0;
 
   //next button click event
-  if (targetName.includes('next')) {
-    if (move === -listMoveMax) {
-      slideBar.style.transform = `translateX(${listMoveMax}px)`;
-    } else if(move > -listMoveMax){
-      move -= ITEM_WIDTH;
-      slideBar.style.transform = `translateX(${move}px)`;
-    }
+  if (targetName.includes('next') && move > -listMoveMax) {
+    move -= ITEM_WIDTH;
   }
   //prev button click event
-  if (targetName.includes('prev')) {
-    if (move === listMoveMin) {
-      slideBar.style.transform = `translateX(${listMoveMin}px)`;
-    } else {
-      move += ITEM_WIDTH;
-      slideBar.style.transform = `translateX(${move}px)`;
-    }
+  if (targetName.includes('prev') && move < listMoveMin) {
+    move += ITEM_WIDTH;
   }
+
+  slideBar.style.transform = `translateX(${move}px)`;
+  return move
 }
 
 slideButtonNext.addEventListener("click", slideFun);
